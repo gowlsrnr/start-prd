@@ -12,7 +12,7 @@ Claude Code 안에서 두 줄이면 끝난다. OS도 경로도 신경 쓸 필요
 
 ```
 /plugin marketplace add gowlsrnr/start-prd
-/plugin install mvp-prd@start-prd
+/plugin install start-prd@start-prd
 ```
 
 업데이트는 `/plugin marketplace update start-prd`.
@@ -22,19 +22,19 @@ Claude Code 안에서 두 줄이면 끝난다. OS도 경로도 신경 쓸 필요
 스킬 본문을 그대로 붙여넣으면 된다.
 
 ```
-https://raw.githubusercontent.com/gowlsrnr/start-prd/main/skills/mvp-prd/SKILL.md
+https://raw.githubusercontent.com/gowlsrnr/start-prd/main/skills/start-prd/SKILL.md
 ```
 
 ### 수동 설치
 
 ```bash
 git clone https://github.com/gowlsrnr/start-prd.git
-cp -r start-prd/skills/mvp-prd ~/.claude/skills/
+cp -r start-prd/skills/start-prd ~/.claude/skills/
 ```
 
 ## 사용
 
-`/mvp-prd`로 직접 부르거나, 아래처럼 말하면 자동으로 걸린다.
+`/start-prd`로 직접 부르거나, 아래처럼 말하면 자동으로 걸린다.
 
 - "이 기능 어떻게 만들지 정리해줘"
 - "요구사항 정리해줘" / "개발 들어가기 전에 정리하자"
