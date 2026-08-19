@@ -8,19 +8,29 @@ PRD가 중간에 뒤집히는 원인은 문서 작성 능력이 아니라 **순�
 
 ## 설치
 
-스킬 디렉터리로 바로 클론한다. 저장소 이름은 `start-prd`지만 **스킬 이름은 `mvp-prd`이므로 클론 대상 폴더명을 맞춰야 한다.**
+Claude Code 안에서 두 줄이면 끝난다. OS도 경로도 신경 쓸 필요 없다.
+
+```
+/plugin marketplace add gowlsrnr/start-prd
+/plugin install mvp-prd@start-prd
+```
+
+업데이트는 `/plugin marketplace update start-prd`.
+
+### 다른 도구에서 쓰려면
+
+스킬 본문을 그대로 붙여넣으면 된다.
+
+```
+https://raw.githubusercontent.com/gowlsrnr/start-prd/main/skills/mvp-prd/SKILL.md
+```
+
+### 수동 설치
 
 ```bash
-git clone https://github.com/gowlsrnr/start-prd.git ~/.claude/skills/mvp-prd
+git clone https://github.com/gowlsrnr/start-prd.git
+cp -r start-prd/skills/mvp-prd ~/.claude/skills/
 ```
-
-Windows PowerShell:
-
-```powershell
-git clone https://github.com/gowlsrnr/start-prd.git "$env:USERPROFILE\.claude\skills\mvp-prd"
-```
-
-Claude Code를 다시 시작하면 스킬 목록에 잡힌다.
 
 ## 사용
 
