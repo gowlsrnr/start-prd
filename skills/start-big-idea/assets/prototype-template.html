@@ -1,0 +1,225 @@
+<!doctype html>
+<!--
+  00_프로토타입.html — start-big-idea [2-2] 산출물 템플릿
+
+  규칙
+  1. 파일 하나에 모든 안을 담는다. 안마다 파일을 나누지 않는다 (비교가 목적).
+  2. 외부 의존성 금지 — CDN·웹폰트·이미지 URL 없이 더블클릭으로 열려야 한다.
+  3. 와이어프레임 수준을 넘지 않는다. 색·아이콘·실제 카피를 넣지 않는다.
+  4. 미확정 영역은 .ph 클래스로 눈에 띄게 남긴다. 그럴싸하게 채우지 않는다.
+  5. 안마다 대표 화면 1~2개만. 안들끼리 갈리는 화면만 그린다.
+
+  채울 곳은 전부 TODO로 표시돼 있다. 남은 TODO가 있으면 아직 완성이 아니다.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TODO 기능명 · 프로토타입 안 비교</title>
+<style>
+  :root{
+    --ink:#111; --mid:#666; --line:#c8c8c8; --bg:#fff; --panel:#f4f4f4;
+    --ph-bg:#fff3c4; --ph-line:#c8a000; --ph-ink:#5c4700;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans KR",sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px 80px}
+
+  /* 이 배너는 지우지 않는다 — 최종 디자인으로 오해받는 걸 막는 장치 */
+  .banner{background:#111;color:#fff;padding:10px 20px;font-size:13px;letter-spacing:.01em}
+  .banner b{font-weight:600}
+
+  h1{font-size:20px;margin:28px 0 4px}
+  .sub{color:var(--mid);margin:0 0 24px}
+
+  /* 안 전환 탭 — 나란히 갈아끼우며 봐야 비교가 된다 */
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  .tabs button{appearance:none;border:1px solid var(--line);border-bottom:none;background:var(--panel);
+    color:var(--mid);padding:9px 16px;font:inherit;font-size:13px;cursor:pointer;
+    border-radius:6px 6px 0 0;margin-bottom:-1px}
+  .tabs button[aria-selected="true"]{background:var(--bg);color:var(--ink);font-weight:600;
+    border-bottom:1px solid var(--bg)}
+
+  /* 안 헤더 카드 — 판단 포인트를 화면 안에 묻지 않고 위로 꺼낸다 */
+  .card{border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:22px;background:var(--panel)}
+  .card .lead{font-size:15px;font-weight:600;margin:0 0 12px}
+  .meta{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;margin:0;font-size:13px}
+  .meta dt{color:var(--mid)}
+  .meta dd{margin:0}
+  .judge{margin-top:14px;padding:10px 12px;background:#fff;border-left:3px solid var(--ink);font-size:13px}
+  .judge b{display:block;margin-bottom:2px;font-size:12px;letter-spacing:.04em;color:var(--mid)}
+
+  /* 흐름 내 위치 — mermaid 대신 CSS 박스 체인 (의존성 없음) */
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 22px;padding:14px;
+        border:1px dashed var(--line);border-radius:8px;font-size:13px}
+  .flow .step{border:1px solid var(--line);border-radius:4px;padding:6px 12px;background:#fff;white-space:nowrap}
+  .flow .step.here{border-color:var(--ink);border-width:2px;font-weight:600}
+  .flow .arw{color:var(--mid)}
+
+  /* 와이어프레임 화면 */
+  .screens{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+  .screen{flex:1 1 380px;border:2px solid var(--ink);border-radius:6px;overflow:hidden;background:#fff}
+  .screen > figcaption{background:var(--ink);color:#fff;padding:6px 12px;font-size:12px;letter-spacing:.02em}
+  .screen .body{padding:14px}
+
+  .box{border:1px solid var(--line);border-radius:4px;padding:10px 12px;margin-bottom:10px;color:var(--mid)}
+  .box.title{font-size:16px;color:var(--ink);font-weight:600;border-style:dashed}
+  .row{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:4px;
+       padding:10px 12px;margin-bottom:8px}
+  .row .grow{flex:1;color:var(--mid)}
+  .btn{border:1.5px solid var(--ink);border-radius:4px;padding:7px 16px;font-size:13px;
+       display:inline-block;background:#fff}
+  .btn.sec{border-color:var(--line);color:var(--mid)}
+  .empty{border:1px dashed var(--line);border-radius:4px;padding:26px 12px;text-align:center;color:var(--mid)}
+
+  /* 미확정 — 얌전하면 "다 됐네"로 읽힌다. 튀게 둔다 */
+  .ph{background:var(--ph-bg);border:1px solid var(--ph-line);border-radius:4px;
+      padding:8px 11px;margin-bottom:10px;font-size:13px;color:var(--ph-ink)}
+  .ph::before{content:"[확인 필요] ";font-weight:700}
+
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-top:10px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--panel);font-weight:600}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="banner"><b>와이어프레임입니다 — 최종 디자인이 아닙니다.</b>
+  위치·순서·흐름을 판단하기 위한 도구입니다. 색·문구·간격은 검토 대상이 아닙니다.</div>
+
+<div class="wrap">
+  <h1>TODO 기능명 · 프로토타입 안 비교</h1>
+  <p class="sub">TODO 재정의한 문제 한 문장 · 작성일 TODO</p>
+
+  <!-- 안 3~5개. 축을 섞는다: 최소 / 정공법 / 수동우회 / 기존자산 재활용 -->
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true"  data-p="A">A · TODO 한 단어</button>
+    <button role="tab" aria-selected="false" data-p="B">B · TODO 한 단어</button>
+    <button role="tab" aria-selected="false" data-p="C">C · TODO 한 단어</button>
+  </div>
+
+  <!-- ===================== 안 A ===================== -->
+  <section id="p-A" role="tabpanel">
+    <div class="card">
+      <p class="lead">TODO 이 안이 무엇인가 — 한 줄</p>
+      <dl class="meta">
+        <dt>크기</dt><dd>S / M / L 중 TODO</dd>
+        <dt>성립 조건</dt><dd>TODO 이 안이 성립하려면 참이어야 하는 것</dd>
+        <dt>기술 관점</dt><dd>TODO 무엇에 물려 있는가(정책·외부서비스·데이터·권한) / 어디가 위험한가</dd>
+      </dl>
+      <div class="judge"><b>이 안을 볼 때 확인할 것</b>TODO 한 줄</div>
+    </div>
+
+    <!-- 흐름 내 위치. 진입 경로가 없는 안은 여기서 걸린다 -->
+    <div class="flow">
+      <span class="step">TODO 진입</span><span class="arw">→</span>
+      <span class="step here">TODO 이 안이 붙는 지점</span><span class="arw">→</span>
+      <span class="step">TODO 다음</span>
+    </div>
+
+    <!-- 대표 화면 1~2개. 안들끼리 갈리는 화면만 -->
+    <div class="screens">
+      <figure class="screen">
+        <figcaption>TODO 화면명</figcaption>
+        <div class="body">
+          <div class="box title">[제목]</div>
+          <div class="box">[설명 2줄]</div>
+          <div class="row"><span class="grow">[항목 1]</span><span class="btn sec">동작</span></div>
+          <div class="row"><span class="grow">[항목 2]</span><span class="btn sec">동작</span></div>
+          <div class="ph">TODO 미확정 지점 — 선택지 A / B</div>
+          <span class="btn">[주요 액션]</span>
+        </div>
+      </figure>
+
+      <figure class="screen">
+        <figcaption>TODO 화면명 — 빈 상태 (안마다 다를 때만)</figcaption>
+        <div class="body">
+          <div class="box title">[제목]</div>
+          <div class="empty">[0건 안내 문구]<br><span class="btn" style="margin-top:12px">[다음 행동]</span></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== 안 B ===================== -->
+  <section id="p-B" role="tabpanel" hidden>
+    <div class="card">
+      <p class="lead">TODO</p>
+      <dl class="meta">
+        <dt>크기</dt><dd>TODO</dd>
+        <dt>성립 조건</dt><dd>TODO</dd>
+        <dt>기술 관점</dt><dd>TODO</dd>
+      </dl>
+      <div class="judge"><b>이 안을 볼 때 확인할 것</b>TODO</div>
+    </div>
+    <div class="flow">
+      <span class="step">TODO</span><span class="arw">→</span>
+      <span class="step here">TODO</span><span class="arw">→</span>
+      <span class="step">TODO</span>
+    </div>
+    <div class="screens">
+      <figure class="screen"><figcaption>TODO</figcaption><div class="body">
+        <div class="box title">[제목]</div>
+        <div class="ph">TODO</div>
+        <span class="btn">[주요 액션]</span>
+      </div></figure>
+    </div>
+  </section>
+
+  <!-- ===================== 안 C ===================== -->
+  <section id="p-C" role="tabpanel" hidden>
+    <div class="card">
+      <p class="lead">TODO</p>
+      <dl class="meta">
+        <dt>크기</dt><dd>TODO</dd>
+        <dt>성립 조건</dt><dd>TODO</dd>
+        <dt>기술 관점</dt><dd>TODO</dd>
+      </dl>
+      <div class="judge"><b>이 안을 볼 때 확인할 것</b>TODO</div>
+    </div>
+    <div class="flow">
+      <span class="step">TODO</span><span class="arw">→</span>
+      <span class="step here">TODO</span><span class="arw">→</span>
+      <span class="step">TODO</span>
+    </div>
+    <div class="screens">
+      <figure class="screen"><figcaption>TODO</figcaption><div class="body">
+        <div class="box title">[제목]</div>
+        <div class="ph">TODO</div>
+        <span class="btn">[주요 액션]</span>
+      </div></figure>
+    </div>
+  </section>
+
+  <!-- 5기준 비교. 기준을 늘리면 결론이 흐려진다 -->
+  <h1 style="font-size:16px;margin-top:36px">한눈에 비교</h1>
+  <table>
+    <tr><th style="width:130px">기준</th><th>A</th><th>B</th><th>C</th></tr>
+    <tr><th>고객 적합도</th><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+    <tr><th>기존 정책 충돌</th><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+    <tr><th>기술 파급</th><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+    <tr><th>개발 비용</th><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+    <tr><th>되돌리기 비용</th><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+  </table>
+  <p class="sub" style="margin-top:14px">
+    추천: <b>TODO안</b> — TODO 한 줄 근거.
+    참고용 시작점이지 승인 요청이 아닙니다. 버린 안과 버린 이유는 워크시트 7번에 있습니다.
+  </p>
+</div>
+
+<script>
+  var tabs = document.querySelectorAll('.tabs button');
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      tabs.forEach(function (o) {
+        var on = o === t;
+        o.setAttribute('aria-selected', on);
+        document.getElementById('p-' + o.dataset.p).hidden = !on;
+      });
+    });
+  });
+</script>
+</body>
+</html>
