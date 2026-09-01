@@ -1,6 +1,6 @@
 {
   "name": "start-prd",
-  "description": "새 기능이나 개선 아이디어를 제품 맥락 정렬 → 발산 → 수렴 → 정책·엣지케이스 확정 → 기능 명세 순으로 구체화해, 기획·디자인·개발이 함께 리뷰할 수 있는 최소 단위 MVP PRD를 만든다. 산출물은 탐색 워크시트와 PRD 문서 2개.",
+  "description": "아이디어를 두 구간으로 나눠 끌고 간다. start-big-idea가 흐릿한 아이디어를 넓혀 시각적 대안을 비교해 방향을 확정하고, start-prd가 그 방향을 팀이 바로 리뷰할 수 있는 MVP PRD로 만든다. 각각 단독으로도 쓸 수 있다.",
   "author": {
     "name": "gowlsrnr",
     "email": "gowlsrnr@gmail.com"
